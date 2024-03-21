@@ -22,4 +22,20 @@ public class Cell : MonoBehaviour
     public int XCoord { get => xCoord;}
     public int YCoord { get => yCoord;}
     public GameObject CellInstance { get => cellInstanse; set => cellInstanse = value; }
+
+    public OpenCellRessult OpenCell()
+    {
+        if (isOpened || isFlaged) return OpenCellRessult.None;
+        if (isBomb) return OpenCellRessult.Gameover;
+
+        isOpened = true;
+        return OpenCellRessult.Opened;
+    }
+}
+
+public enum OpenCellRessult
+{
+    Gameover,
+    Opened,
+    None
 }

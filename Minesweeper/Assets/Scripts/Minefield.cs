@@ -63,4 +63,69 @@ public class Minefield : MonoBehaviour
             setBombs++;
         }
     }
+
+    public void OpenCellByCoords(Vector3Int cellCoords)
+    {
+        Cell cell = positionToCell[cellCoords];
+        OpenCellRessult result = cell.OpenCell();
+        if (result == OpenCellRessult.Opened)
+        {
+            int bombsAround = GetBombsAroundCell(cell);
+            visualizer.OpenCell(cell, bombsAround);
+            ClosedCells--;
+
+            if (bombsAround == 0)
+            {
+                foreach (Cell neighbour in GetNeighbourCells(cell))
+                {
+                    OpenCellByCoords(new Vector3Int(neighbour.XCoord, neighbour.YCoord, 0));
+                }
+            }
+        }
+        if (result == OpenCellRessult.Gameover)
+        {
+            print("you loze");
+        }
+
+        if (ClosedCells == bombsToSetup)
+        {
+            print("you win");
+        }
+
+    }
+
+    private IEnumerable<Cell> GetNeighbourCells(Cell cell)
+    {
+        List<Cell> neighbourCells = new List<Cell>();
+        for (int i = -1; i < 2; i++)
+        {
+            for (int j = -1; j < 2; j++)
+            {
+                Vector3Int neighbourCoords = new Vector3Int(cell.XCoord + i, cell.YCoord + j, 0);
+                if (!positionToCell.ContainsKey(neighbourCoords)) continue;
+                if (i == 0 && j == 0) continue;
+                Cell neighbourCell = positionToCell[neighbourCoords];
+                neighbourCells.Add(neighbourCell);
+            }
+        }
+        return neighbourCells;
+    }
+
+    private int GetBombsAroundCell(Cell cell)
+    {
+        int bombsAround = 0;
+        foreach (var neighbour in GetNeighbourCells(cell)) 
+        {
+            if (neighbour.IsBomb)
+            {
+                bombsAround++;
+            }
+        }
+        return bombsAround;
+    }
+
+    internal void SetBombFlag(Vector3Int cellCoords)
+    {
+        throw new System.NotImplementedException();
+    }
 }
