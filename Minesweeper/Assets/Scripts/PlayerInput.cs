@@ -27,6 +27,9 @@ public class PlayerInput : MonoBehaviour
         {
             minefield.OpenCellByCoords(cellCoords);
         }
-        
+        else
+        {
+            minefield.SetBombFlag(cellCoords);
+        }
     }
 }

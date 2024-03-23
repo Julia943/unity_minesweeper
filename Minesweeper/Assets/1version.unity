@@ -218,6 +218,9 @@ MonoBehaviour:
     digitSprite: {fileID: 21300000, guid: 95f8b36bcfe814e4b82cb543ca8f2793, type: 3}
   - numberOfBombs: 8
     digitSprite: {fileID: 21300000, guid: b404d6b8f6b1c1d4abb3790fb1a1edaa, type: 3}
+  flagSprite: {fileID: 21300000, guid: 0b7e21e12f25eb444ba3faa58678dde2, type: 3}
+  closedSprite: {fileID: 21300000, guid: b4190efb034822444b4afd0c935bf7fb, type: 3}
+  bombSprite: {fileID: 21300000, guid: 7baf40e20eef62b47b96b9fc39eb4286, type: 3}
 --- !u!4 &849310845
 Transform:
   m_ObjectHideFlags: 0
@@ -244,6 +247,7 @@ GameObject:
   - component: {fileID: 1042271716}
   - component: {fileID: 1042271715}
   - component: {fileID: 1042271714}
+  - component: {fileID: 1042271717}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -325,6 +329,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1042271717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042271713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94bb93065d880de4fa08f9301d36f2ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minefield: {fileID: 2054381991}
 --- !u!1 &1241561922
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +405,8 @@ MonoBehaviour:
   width: 5
   heigth: 5
   visualizer: {fileID: 849310844}
-  bombPercentage: 20
+  bombSprite: {fileID: 21300000, guid: 7baf40e20eef62b47b96b9fc39eb4286, type: 3}
+  bombPercentage: 16
 --- !u!4 &2054381992
 Transform:
   m_ObjectHideFlags: 0
