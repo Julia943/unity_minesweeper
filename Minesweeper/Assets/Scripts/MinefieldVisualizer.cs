@@ -8,6 +8,9 @@ public class MinefieldVisualize : MonoBehaviour
     [SerializeField] GameObject closedCell;
     [SerializeField] Transform cellContainer;
     [SerializeField] DigitSprites[] digitSprites;
+    [SerializeField] Sprite flagSprite;
+    [SerializeField] Sprite closedSprite;
+    [SerializeField] Sprite bombSprite;
 
     public void VisuializeCellsOnStart(List<Cell> cells)
     {
@@ -22,7 +25,12 @@ public class MinefieldVisualize : MonoBehaviour
 
     public void OpenCell(Cell cell, int bombsAround)
     {
-        cell.CellInstance.GetComponent<SpriteRenderer>().sprite = GetBombsAroundSprite(bombsAround);
+        if (cell.IsBomb)
+        {
+            cell.CellInstance.GetComponent<SpriteRenderer>().sprite = flagSprite;
+        }
+        else
+            cell.CellInstance.GetComponent<SpriteRenderer>().sprite = GetBombsAroundSprite(bombsAround);
     }
 
     private Sprite GetBombsAroundSprite(int bombsAround)
@@ -32,6 +40,18 @@ public class MinefieldVisualize : MonoBehaviour
             if (sprite.numberOfBombs == bombsAround) return sprite.digitSprite;
         }
         return null;
+    }
+
+    public void SetBombFlag(Cell cell, SetBombFlagResult result)
+    {
+        if (result == SetBombFlagResult.Setted)
+        {
+            cell.CellInstance.GetComponent<SpriteRenderer>().sprite = flagSprite;
+        }
+        else
+        {
+            cell.CellInstance.GetComponent<SpriteRenderer>().sprite = closedSprite;
+        }
     }
 }
 

@@ -26,16 +26,35 @@ public class Cell : MonoBehaviour
     public OpenCellRessult OpenCell()
     {
         if (isOpened || isFlaged) return OpenCellRessult.None;
-        if (isBomb) return OpenCellRessult.Gameover;
-
         isOpened = true;
+        if (isBomb) return OpenCellRessult.Gameover;
         return OpenCellRessult.Opened;
     }
+
+    public SetBombFlagResult SetBombFlag()
+    {
+        if (isOpened) return SetBombFlagResult.None;
+        if (isFlaged)
+        {
+            isFlaged = false;
+            return SetBombFlagResult.Unsetted;
+        }
+        isFlaged = true;
+        return SetBombFlagResult.Setted;
+    }
+
 }
 
 public enum OpenCellRessult
 {
     Gameover,
     Opened,
+    None
+}
+
+public enum SetBombFlagResult
+{
+    Setted,
+    Unsetted,
     None
 }

@@ -21,6 +21,9 @@ public class Minefield : MonoBehaviour
     int settedFlags = 0;
     int ClosedCells;
 
+    public int Width { get => width; }
+    public int Heigth { get => heigth; }
+
     private void Awake()
     {
         totalCells = width * heigth;
@@ -28,6 +31,24 @@ public class Minefield : MonoBehaviour
         remainedBombs = bombsToSetup;
         ClosedCells = totalCells;
     }
+    /*private void OpenRandomEmtyCell()
+    {
+        bool isOpened = false;
+        List<Cell> cellsToChooseFrom = new List<Cell>(cells);
+
+        while (!isOpened && cellsToChooseFrom.Count > 0)
+        {
+            int randomIndex = Random.Range(0, cellsToChooseFrom.Count);
+            Cell cell = cellsToChooseFrom[randomIndex];
+            if (cell.IsBomb || GetBombsAroundCell(cell) != 0)
+            {
+                cellsToChooseFrom.Remove(cell);
+                continue;
+            }
+            OpenCellByCoords(new Vector3Int(cell.XCoord, cell.YCoord, 0));
+            isOpened = true;
+        }
+    }*/
     private void Start()
     {
         StartGame();
@@ -36,6 +57,7 @@ public class Minefield : MonoBehaviour
     {
         CreateMinefield();
         visualizer.VisuializeCellsOnStart(cells);
+        //OpenRandomEmtyCell();
     }
 
     private void CreateMinefield()
@@ -84,6 +106,7 @@ public class Minefield : MonoBehaviour
         }
         if (result == OpenCellRessult.Gameover)
         {
+            
             print("you loze");
         }
 
@@ -124,8 +147,34 @@ public class Minefield : MonoBehaviour
         return bombsAround;
     }
 
-    internal void SetBombFlag(Vector3Int cellCoords)
+    public void SetBombFlag(Vector3Int cellCoords)
     {
-        throw new System.NotImplementedException();
+        Cell cell = positionToCell[cellCoords];
+        SetBombFlagResult result = cell.SetBombFlag();
+
+        if (result == SetBombFlagResult.Setted)
+        {
+            settedFlags++;
+            visualizer.SetBombFlag(cell, result);
+
+            if (cell.IsBomb) 
+            {
+                remainedBombs--;
+                if (remainedBombs == 0 && settedFlags == bombsToSetup)
+                {
+                    print("you win");
+                }
+            }
+        }
+
+        if (result == SetBombFlagResult.Unsetted)
+        {
+            visualizer.SetBombFlag(cell, result);
+            settedFlags--;
+            if (cell.IsBomb) 
+            { 
+                remainedBombs++;
+            }
+        }
     }
 }
