@@ -27,10 +27,12 @@ public class MinefieldVisualize : MonoBehaviour
     {
         if (cell.IsBomb)
         {
-            cell.CellInstance.GetComponent<SpriteRenderer>().sprite = flagSprite;
+            cell.CellInstance.GetComponent<SpriteRenderer>().sprite = bombSprite;
         }
         else
+        {
             cell.CellInstance.GetComponent<SpriteRenderer>().sprite = GetBombsAroundSprite(bombsAround);
+        }
     }
 
     private Sprite GetBombsAroundSprite(int bombsAround)
