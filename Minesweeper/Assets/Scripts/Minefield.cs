@@ -106,15 +106,26 @@ public class Minefield : MonoBehaviour
         }
         if (result == OpenCellRessult.Gameover)
         {
-            
-            print("you loze");
+            int bombsAround = GetBombsAroundCell(cell);
+            visualizer.OpenCell(cell, bombsAround);
+            ShowGameOver();
         }
 
         if (ClosedCells == bombsToSetup)
         {
-            print("you win");
+            ShowWin();
         }
 
+    }
+
+    private void ShowWin()
+    {
+        print("you win");
+    }
+
+    private void ShowGameOver()
+    {
+        print("You lose");
     }
 
     private IEnumerable<Cell> GetNeighbourCells(Cell cell)
@@ -162,7 +173,7 @@ public class Minefield : MonoBehaviour
                 remainedBombs--;
                 if (remainedBombs == 0 && settedFlags == bombsToSetup)
                 {
-                    print("you win");
+                    ShowWin();
                 }
             }
         }

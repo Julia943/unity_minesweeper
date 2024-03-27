@@ -405,7 +405,6 @@ MonoBehaviour:
   width: 5
   heigth: 5
   visualizer: {fileID: 849310844}
-  bombSprite: {fileID: 21300000, guid: 7baf40e20eef62b47b96b9fc39eb4286, type: 3}
   bombPercentage: 16
 --- !u!4 &2054381992
 Transform:
