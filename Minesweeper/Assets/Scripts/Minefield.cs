@@ -20,6 +20,7 @@ public class Minefield : MonoBehaviour
 
     int settedFlags = 0;
     int ClosedCells;
+    private bool gameEnded = false;
 
     public int Width { get => width; }
     public int Heigth { get => heigth; }
@@ -88,32 +89,39 @@ public class Minefield : MonoBehaviour
 
     public void OpenCellByCoords(Vector3Int cellCoords)
     {
-        Cell cell = positionToCell[cellCoords];
-        OpenCellRessult result = cell.OpenCell();
-        if (result == OpenCellRessult.Opened)
+        if (gameEnded)
         {
-            int bombsAround = GetBombsAroundCell(cell);
-            visualizer.OpenCell(cell, bombsAround);
-            ClosedCells--;
-
-            if (bombsAround == 0)
+            return; // Если игра завершена, прерываем выполнение функции
+        }
+        else
+        {
+            Cell cell = positionToCell[cellCoords];
+            OpenCellRessult result = cell.OpenCell();
+            if (result == OpenCellRessult.Opened)
             {
-                foreach (Cell neighbour in GetNeighbourCells(cell))
+                int bombsAround = GetBombsAroundCell(cell);
+                visualizer.OpenCell(cell, bombsAround);
+                ClosedCells--;
+
+                if (bombsAround == 0)
                 {
-                    OpenCellByCoords(new Vector3Int(neighbour.XCoord, neighbour.YCoord, 0));
+                    foreach (Cell neighbour in GetNeighbourCells(cell))
+                    {
+                        OpenCellByCoords(new Vector3Int(neighbour.XCoord, neighbour.YCoord, 0));
+                    }
                 }
             }
-        }
-        if (result == OpenCellRessult.Gameover)
-        {
-            int bombsAround = GetBombsAroundCell(cell);
-            visualizer.OpenCell(cell, bombsAround);
-            ShowGameOver();
-        }
+            if (result == OpenCellRessult.Gameover)
+            {
+                int bombsAround = GetBombsAroundCell(cell);
+                visualizer.OpenCell(cell, bombsAround);
+                ShowGameOver();
+            }
 
-        if (ClosedCells == bombsToSetup)
-        {
-            ShowWin();
+            if (ClosedCells == bombsToSetup)
+            {
+                ShowWin();
+            }
         }
 
     }
@@ -121,11 +129,13 @@ public class Minefield : MonoBehaviour
     private void ShowWin()
     {
         print("you win");
+        gameEnded = true;
     }
 
     private void ShowGameOver()
     {
         print("You lose");
+        gameEnded = true;
     }
 
     private IEnumerable<Cell> GetNeighbourCells(Cell cell)
@@ -160,31 +170,38 @@ public class Minefield : MonoBehaviour
 
     public void SetBombFlag(Vector3Int cellCoords)
     {
-        Cell cell = positionToCell[cellCoords];
-        SetBombFlagResult result = cell.SetBombFlag();
-
-        if (result == SetBombFlagResult.Setted)
+        if (gameEnded)
         {
-            settedFlags++;
-            visualizer.SetBombFlag(cell, result);
+            return; // Если игра завершена, прерываем выполнение функции
+        }
+        else
+        {
+            Cell cell = positionToCell[cellCoords];
+            SetBombFlagResult result = cell.SetBombFlag();
 
-            if (cell.IsBomb) 
+            if (result == SetBombFlagResult.Setted)
             {
-                remainedBombs--;
-                if (remainedBombs == 0 && settedFlags == bombsToSetup)
+                settedFlags++;
+                visualizer.SetBombFlag(cell, result);
+
+                if (cell.IsBomb)
                 {
-                    ShowWin();
+                    remainedBombs--;
+                    if (remainedBombs == 0 && settedFlags == bombsToSetup)
+                    {
+                        ShowWin();
+                    }
                 }
             }
-        }
 
-        if (result == SetBombFlagResult.Unsetted)
-        {
-            visualizer.SetBombFlag(cell, result);
-            settedFlags--;
-            if (cell.IsBomb) 
-            { 
-                remainedBombs++;
+            if (result == SetBombFlagResult.Unsetted)
+            {
+                visualizer.SetBombFlag(cell, result);
+                settedFlags--;
+                if (cell.IsBomb)
+                {
+                    remainedBombs++;
+                }
             }
         }
     }
