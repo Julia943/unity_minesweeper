@@ -32,7 +32,7 @@ public class Minefield : MonoBehaviour
         remainedBombs = bombsToSetup;
         ClosedCells = totalCells;
     }
-    /*private void OpenRandomEmtyCell()
+    private void OpenRandomEmtyCell()
     {
         bool isOpened = false;
         List<Cell> cellsToChooseFrom = new List<Cell>(cells);
@@ -49,16 +49,16 @@ public class Minefield : MonoBehaviour
             OpenCellByCoords(new Vector3Int(cell.XCoord, cell.YCoord, 0));
             isOpened = true;
         }
-    }*/
-    private void Start()
+    }
+    /*private void Start()
     {
         StartGame();
-    }
+    }*/
     public void StartGame()
     {
         CreateMinefield();
         visualizer.VisuializeCellsOnStart(cells);
-        //OpenRandomEmtyCell();
+        OpenRandomEmtyCell();
     }
 
     private void CreateMinefield()
@@ -91,7 +91,7 @@ public class Minefield : MonoBehaviour
     {
         if (gameEnded)
         {
-            return; // Если игра завершена, прерываем выполнение функции
+            return;
         }
         else
         {
@@ -172,10 +172,11 @@ public class Minefield : MonoBehaviour
     {
         if (gameEnded)
         {
-            return; // Если игра завершена, прерываем выполнение функции
+            return;
         }
         else
         {
+            
             Cell cell = positionToCell[cellCoords];
             SetBombFlagResult result = cell.SetBombFlag();
 
