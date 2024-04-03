@@ -12,7 +12,7 @@ public class Cell : MonoBehaviour
     GameObject cellInstanse;
 
 
-    public Cell(int xCoord, int yCoord)
+    public void Initialize(int xCoord, int yCoord)
     {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
