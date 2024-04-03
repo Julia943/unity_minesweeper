@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MinefieldVisualize : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class MinefieldVisualize : MonoBehaviour
     [SerializeField] Sprite flagSprite;
     [SerializeField] Sprite closedSprite;
     [SerializeField] Sprite bombSprite;
+    [SerializeField] Sprite victorySprite;
+    [SerializeField] Sprite loseSprite;
+    [SerializeField] Button menuButton;
+
 
     public void VisuializeCellsOnStart(List<Cell> cells)
     {
@@ -55,6 +60,7 @@ public class MinefieldVisualize : MonoBehaviour
             cell.CellInstance.GetComponent<SpriteRenderer>().sprite = closedSprite;
         }
     }
+
 }
 
 [System.Serializable]

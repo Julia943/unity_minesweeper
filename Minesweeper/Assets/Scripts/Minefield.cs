@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Minefield : MonoBehaviour
 {
     [SerializeField] int width;
-    [SerializeField] int heigth;
+    [SerializeField] int height;
     [SerializeField] MinefieldVisualize visualizer;
 
     [Range(15, 50)]
@@ -21,16 +24,26 @@ public class Minefield : MonoBehaviour
     int settedFlags = 0;
     int ClosedCells;
     private bool gameEnded = false;
+    public Button startgame, menu;
+    public Image victoryImage, loseImage, goose;
+    public Text level, results;
+    public CanvasGroup canvasGroupLose, canvasGroupWin;
 
     public int Width { get => width; }
-    public int Heigth { get => heigth; }
+    public int Height { get => height; }
 
-    private void Awake()
+    public void SetFieldSize(int newWidth, int newHeight)
     {
-        totalCells = width * heigth;
-        bombsToSetup = totalCells * bombPercentage / 100;
+        width = newWidth;
+        height = newHeight;
+
+        float totalCells = width * height;
+        float defaultBombPercentage = 20f; 
+        float adjustedBombPercentage = defaultBombPercentage * (totalCells / (5f * 5f)); 
+
+        bombsToSetup = (int)(totalCells * (adjustedBombPercentage / 100f));
         remainedBombs = bombsToSetup;
-        ClosedCells = totalCells;
+        ClosedCells = (int)totalCells;
     }
     private void OpenRandomEmtyCell()
     {
@@ -50,31 +63,32 @@ public class Minefield : MonoBehaviour
             isOpened = true;
         }
     }
-    /*private void Start()
-    {
-        StartGame();
-    }*/
+  
     public void StartGame()
     {
+        
         CreateMinefield();
         visualizer.VisuializeCellsOnStart(cells);
         OpenRandomEmtyCell();
+        
     }
 
     private void CreateMinefield()
     {
         for (int i = 0; i < width; i++)
         {
-            for (int j = 0; j < heigth; j++)
+            for (int j = 0; j < height; j++)
             {
-                Cell cell = new Cell(i, j);
-                cells.Add(cell);
-                positionToCell[new Vector3Int(i, j, 0)] = cell;
-
+                GameObject cellObject = new GameObject("Cell_" + i + "_" + j);
+                Cell cellComponent = cellObject.AddComponent<Cell>();
+                cellComponent.Initialize(i, j);
+                cells.Add(cellComponent);
+                positionToCell[new Vector3Int(i, j, 0)] = cellComponent;
             }
         }
         SetBombs();
     }
+
     private void SetBombs()
     {
         int setBombs = 0;
@@ -128,14 +142,18 @@ public class Minefield : MonoBehaviour
 
     private void ShowWin()
     {
-        print("you win");
-        gameEnded = true;
+        results.text = "Победа!";
+        victoryImage.gameObject.SetActive(true);
+        canvasGroupWin.alpha = 1f;
+        gameEnded = true;        
     }
 
     private void ShowGameOver()
     {
-        print("You lose");
-        gameEnded = true;
+        results.text = "В следующий раз повезет!";
+        loseImage.gameObject.SetActive(true);
+        canvasGroupLose.alpha = 1f;
+        gameEnded = true;       
     }
 
     private IEnumerable<Cell> GetNeighbourCells(Cell cell)

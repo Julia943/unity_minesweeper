@@ -8,7 +8,7 @@ public class CameraAdjuster : MonoBehaviour
 
     private void Awake()
     {
-        GetComponent<Camera>().orthographicSize = minefield.Heigth / 2f + 2.5f;
-        transform.position = new Vector3(minefield.Width / 2f - 0.5f, minefield.Heigth / 2f - 0.5f, -10);
+        GetComponent<Camera>().orthographicSize = 5f;
+        transform.position = new Vector3(2f, 2f, -10);
     }
 }
