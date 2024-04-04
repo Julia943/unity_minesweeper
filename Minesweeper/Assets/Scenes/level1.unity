@@ -389,7 +389,7 @@ GameObject:
   - component: {fileID: 465811544}
   - component: {fileID: 465811543}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: startgame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -645,7 +645,6 @@ GameObject:
   - component: {fileID: 641935365}
   - component: {fileID: 641935364}
   - component: {fileID: 641935366}
-  - component: {fileID: 641935368}
   - component: {fileID: 641935369}
   m_Layer: 5
   m_Name: levelwin
@@ -723,51 +722,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!61 &641935368
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641935362}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 61.63, y: 63.03}
-  m_EdgeRadius: 0
 --- !u!114 &641935369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1633,7 +1587,7 @@ MonoBehaviour:
   victoryImage: {fileID: 641935364}
   loseImage: {fileID: 824767378}
   goose: {fileID: 1380316026}
-  level: {fileID: 256422933}
+  level1: {fileID: 256422933}
   results: {fileID: 574255907}
   canvasGroupLose: {fileID: 824767380}
   canvasGroupWin: {fileID: 641935366}

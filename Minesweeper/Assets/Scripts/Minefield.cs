@@ -26,7 +26,7 @@ public class Minefield : MonoBehaviour
     private bool gameEnded = false;
     public Button startgame, menu;
     public Image victoryImage, loseImage, goose;
-    public Text level, results;
+    public Text level1, results;
     public CanvasGroup canvasGroupLose, canvasGroupWin;
 
     public int Width { get => width; }
@@ -139,13 +139,14 @@ public class Minefield : MonoBehaviour
         }
 
     }
-
+    
     private void ShowWin()
     {
         results.text = "Победа!";
         victoryImage.gameObject.SetActive(true);
         canvasGroupWin.alpha = 1f;
-        gameEnded = true;        
+        gameEnded = true;
+        
     }
 
     private void ShowGameOver()

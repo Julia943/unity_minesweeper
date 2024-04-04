@@ -14,7 +14,7 @@ public class LevelClick : MonoBehaviour
         minefield.loseImage.gameObject.SetActive(false);
         minefield.goose.gameObject.SetActive(false);
         minefield.startgame.gameObject.SetActive(false);
-        minefield.level.gameObject.SetActive(false);
+        minefield.level1.gameObject.SetActive(false);
         minefield.SetFieldSize(5, 5);
         minefield.StartGame();
     }
