@@ -9,6 +9,6 @@ public class CameraAdjuster : MonoBehaviour
     private void Awake()
     {
         GetComponent<Camera>().orthographicSize = 5f;
-        transform.position = new Vector3(2f, 2f, -10);
+        transform.position = new Vector3(5f, 5f, -10);
     }
 }
